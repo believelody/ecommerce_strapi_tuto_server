@@ -64,7 +64,6 @@ module.exports = {
         description: `Order ${new Date()} - User ${ctx.state.user._id}`,
         source: token
       })
-      console.log(products)
       const order = await strapi.services.order.add({
         user: ctx.state.user._id,
         address,

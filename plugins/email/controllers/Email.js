@@ -30,7 +30,21 @@ module.exports = {
 
     let options = ctx.request.body;
 
-    await strapi.plugins.email.services.email.send(options, config);
+    // await strapi.plugins.email.services.email.send(options, config);
+    // console.log('options: ', options)
+    try {
+      await strapi.plugins['email'].services.email.send({
+        to: options.to,
+        from: 'test@example.com',
+        subject: options.subject,
+        text: options.text,
+        html: options.html
+      })
+    }
+    catch (e) {
+      console.log(e)
+      return ctx.badRequest(null, e)
+    }
 
     // Send 200 `ok`
     ctx.send({});
