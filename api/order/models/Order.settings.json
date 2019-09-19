@@ -1,6 +1,6 @@
 {
   "connection": "default",
-  "collectionName": "",
+  "collectionName": "order",
   "info": {
     "name": "order",
     "description": ""
@@ -25,7 +25,7 @@
       "type": "decimal",
       "required": true
     },
-    "brews": {
+    "products": {
       "required": true,
       "type": "json"
     }

@@ -6,7 +6,7 @@
  * @description: A set of functions called "actions" for managing `Order`.
  */
 
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
+const stripe = require('stripe')('sk_test_8qiZ6SXvVLKEKq4coPtfv7eT00fWdgF8t2')
 
 module.exports = {
 
@@ -56,26 +56,27 @@ module.exports = {
 
   create: async (ctx) => {
     try {
-      const { address, token, zip, city, brews, amount } = ctx.request.body
+      console.log(process.env.STRIPE_SECRET_KEY)
+      const { address, token, zip, city, products, amount } = ctx.request.body
       const charge = await stripe.charges.create({
         amount: amount * 100,
         currency: 'usd',
         description: `Order ${new Date()} - User ${ctx.state.user._id}`,
         source: token
       })
-
+      console.log(products)
       const order = await strapi.services.order.add({
         user: ctx.state.user._id,
         address,
         amount,
-        brews,
+        products,
         zip,
         city
       })
 
       return order
     } catch (e) {
-
+      console.log(e)
     }
   },
 
